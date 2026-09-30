@@ -1,0 +1,39 @@
+# Environnement
+.env
+.env.local
+
+# Build .NET
+bin/
+obj/
+publish/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+project.lock.json
+*.nuget.props
+*.nuget.targets
+
+# Base SQLite locale
+*.db
+*.db-shm
+*.db-wal
+
+# Resultats de tests et couverture
+TestResults/
+*.trx
+coverage*.xml
+coverage*.json
+
+# IDE
+.vs/
+.vscode/
+.idea/
+*.swp
+
+# Systeme
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
