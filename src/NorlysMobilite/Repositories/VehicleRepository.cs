@@ -5,7 +5,7 @@ using NorlysMobilite.Models;
 namespace NorlysMobilite.Repositories;
 
 /// <summary>
-/// Implémentation EF Core de l'accès aux véhicules. Les lectures chargent la station et son responsable.
+/// Implémentation EF Core de l'accès aux véhicules.
 /// </summary>
 public class VehicleRepository : IVehicleRepository
 {
@@ -18,17 +18,17 @@ public class VehicleRepository : IVehicleRepository
 
     public async Task<List<Vehicle>> FindAllAsync()
     {
-        return await WithNavigations().ToListAsync();
+        return await _context.Vehicles.ToListAsync();
     }
 
     public async Task<Vehicle?> FindByIdAsync(long id)
     {
-        return await WithNavigations().FirstOrDefaultAsync(v => v.Id == id);
+        return await _context.Vehicles.FirstOrDefaultAsync(v => v.Id == id);
     }
 
     public async Task<List<Vehicle>> FindByStationIdAsync(long stationId)
     {
-        return await WithNavigations().Where(v => v.StationId == stationId).ToListAsync();
+        return await _context.Vehicles.Where(v => v.StationId == stationId).ToListAsync();
     }
 
     public async Task<int> CountByStationIdAsync(long stationId)
@@ -38,12 +38,12 @@ public class VehicleRepository : IVehicleRepository
 
     public async Task<List<Vehicle>> FindByStatusAsync(VehicleStatus status)
     {
-        return await WithNavigations().Where(v => v.Status == status).ToListAsync();
+        return await _context.Vehicles.Where(v => v.Status == status).ToListAsync();
     }
 
     public async Task<Vehicle?> FindBySerialNumberAsync(string serialNumber)
     {
-        return await WithNavigations().FirstOrDefaultAsync(v => v.SerialNumber == serialNumber);
+        return await _context.Vehicles.FirstOrDefaultAsync(v => v.SerialNumber == serialNumber);
     }
 
     public async Task<bool> ExistsBySerialNumberAsync(string serialNumber)
@@ -62,12 +62,5 @@ public class VehicleRepository : IVehicleRepository
     {
         await _context.SaveChangesAsync();
         return vehicle;
-    }
-
-    private IQueryable<Vehicle> WithNavigations()
-    {
-        return _context.Vehicles
-            .Include(v => v.Station)
-            .ThenInclude(s => s!.Manager);
     }
 }

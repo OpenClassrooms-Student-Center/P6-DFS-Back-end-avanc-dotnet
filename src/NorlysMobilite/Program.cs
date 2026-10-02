@@ -79,3 +79,11 @@ using (var scope = app.Services.CreateScope())
 }
 
 app.Run();
+
+/// <summary>
+/// Point d'entrée de l'application, exposé publiquement pour les tests d'intégration
+/// qui démarrent l'hôte via <c>WebApplicationFactory&lt;Program&gt;</c>.
+/// </summary>
+public partial class Program
+{
+}
